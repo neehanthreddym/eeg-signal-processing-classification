@@ -1,0 +1,29 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Project files
+Checklist.md
+eeg_assignment.pdf
+
+# Data and large files (PhysioNet, ANPHY-Sleep)
+data
+*.edf
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+
+# IDEs
+.vscode/
+.idea/
