@@ -12,6 +12,7 @@ wheels/
 # Project files
 Checklist.md
 eeg_assignment.pdf
+slides
 
 # Data and large files (PhysioNet, ANPHY-Sleep)
 data
