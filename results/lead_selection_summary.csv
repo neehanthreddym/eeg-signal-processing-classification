@@ -1,0 +1,6 @@
+participant,n_channels,sfreq,duration_hrs,available_central,chosen_lead,notes,selection_notes
+EPCTL11,93,1000.0,6.6,"C3, C4, CZ, C5, C1, CP3, CP1, C6, C2, CPZ, CP2, CP4, CP6, ChEMG1, ChEMG2, CP5",CZ,,C4 rejected (artifacts/baseline drift). C3 & CZ clean. CZ selected as midline standard.
+EPCTL12,93,1000.0,6.52,"C3, C4, CZ, C5, C1, CP3, CP1, C6, C2, CPZ, CP2, CP4, CP6, ChEMG1, ChEMG2, CP5",CZ,,C4 rejected (artifacts/baseline drift). C3 & CZ clean. CZ selected as midline standard.
+EPCTL13,93,1000.0,7.71,"C3, C4, CZ, C5, C1, CP3, CP1, C6, C2, CPZ, CP2, CP4, CP6, ChEMG1, ChEMG2, CP5",CZ,,C4 rejected (artifacts/baseline drift). C3 & CZ clean. CZ selected as midline standard.
+EPCTL14,93,1000.0,6.45,"C3, C4, CZ, C5, C1, CP3, CP1, C6, C2, CPZ, CP2, CP4, CP6, ChEMG1, ChEMG2, CP5",CZ,,C4 rejected (artifacts/baseline drift). C3 & CZ clean. CZ selected as midline standard.
+EPCTL15,93,1000.0,6.29,"C3, C4, CZ, C5, C1, CP3, CP1, C6, C2, CPZ, CP2, CP4, CP6, ChEMG1, ChEMG2, CP5",CZ,,C4 rejected (artifacts/baseline drift). C3 & CZ clean. CZ selected as midline standard.
