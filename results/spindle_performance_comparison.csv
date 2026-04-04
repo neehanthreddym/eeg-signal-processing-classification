@@ -1,0 +1,6 @@
+participant,Manual_Count,Manual_Density,Manual_Avg_Duration,YASA_Count,YASA_Density,YASA_Avg_Duration,Density_%_Difference,Duration_%_Difference
+EPCTL11,484,3.25,0.77,468,3.14,0.89,3.42,-13.45
+EPCTL12,218,1.72,0.67,177,1.39,0.77,23.16,-13.61
+EPCTL13,407,2.23,0.69,683,3.74,0.83,-40.41,-17.28
+EPCTL14,474,3.19,0.77,485,3.27,0.93,-2.27,-16.57
+EPCTL15,318,2.05,0.72,119,0.77,0.76,167.23,-5.8
