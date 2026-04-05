@@ -13,11 +13,20 @@ This work consists of two core components analyzing EEG data using classical sig
 - **Dataset:** PhysioNet EEG Motor Movement/Imagery Dataset
 
 ## Project Structure
-- `data/`: Raw and processed dataset files
-  - `raw/`: Untouched ANPHY-Sleep EDF files
-  - `processed/`: Generated outputs (e.g., `yasa_detections/`, `manual_detection/`)
-- `notebooks/`: Jupyter notebooks for experiments and modeling
-- `src/`: Core logic and helper scripts
-- `figures/`: PSD plots, topographic maps, etc.
-- `results/`: Output tables, confusion matrices, logs
-- `notes/`: Project logs and literature notes
+
+```text
+.
+├── data/
+│   ├── spindle_detection/      # Sleep spindle analysis (Part 1)
+│   │   ├── raw/                # Original ANPHY-Sleep EDF files
+│   │   └── processed/          # Generated detection summaries (Manual vs. YASA)
+│   └── motor_imagery/          # Motor imagery classification (Part 2)
+├── notebooks/                  # Primary experiment and analysis workflows
+│   ├── part1_spindles.ipynb    # Hilbert envelope detection & benchmarking
+│   └── part2_motor_imagery.ipynb # CSP, LDA/SVM classification pipeline
+├── results/                    # Critical CSV exports (Lead selection, Hyperparameters, Performance)
+├── figures/                    # Visual outputs (PSD plots, Visual proofs, Topographic maps)
+├── notes/                      # Project documentation
+│   └── decisions_and_roadblocks.md # Detailed log of choices and troubleshooting
+├── src/                        # Supporting Python modules and utilities
+└── README.md                   # Navigation and project overview
