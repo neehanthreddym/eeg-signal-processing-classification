@@ -25,23 +25,41 @@
 - **Envelope noise profile:** The raw Hilbert envelope exhibited high-frequency transients that induced artificial event fragmentation, falsely splitting single physiological spindles into multiple sub-0.5s errors, mathematically validating the need to apply a 100ms smoothing window.
 - **Threshold sensitivity (k):** Tested multipliers 1.2, 1.5, and 1.8. Higher thresholds like `k=1.8` were far too strict (e.g. only 269 spindles). I permanently locked in **k = 1.2** because it yielded exactly 484 spindles (Difference = +16, Percent difference = +3.42%) on our calibration subject, representing our mathematical optimum before out-of-sample testing.
 
----
 
 ## Part 2: Motor Imagery Classification
 
 ### Parameter Summary Log
-- **Band-pass filter range:** ...
-- **Epoch window (relative to cue):** ...
-- **CSP components:** ...
-- **LDA settings:** ...
-- **SVM settings:** ...
+- **Band-pass filter range:** `8–30 Hz`
+- **Epoch window (relative to cue):** `-1.0 to 4.0 s`
+- **Baseline window:** `-1.0 to 0.0 s`
+- **Classifier window:** `0.5 to 3.5 s`
+- **CSP components:** `4`
+- **LDA settings:** `solver="svd"`
+- **SVM settings:** `kernel="linear", C=1.0`
 
 ### Major Roadblocks
-- **Sampling Frequency Discrepancy:** Identified that three subjects (`S088`, `S092`, `S100`) were recorded at **128 Hz**, while the rest of the dataset is **160 Hz**. *Solution:* Excluded these subjects from the clean pool to maintain identical time-series shapes and frequency resolution for the CSP baseline.
-- **Channel Name Inconsistency:** Raw PhysioNet EDF annotations include trailing dots in channel labels (e.g., `C3..`, `Cz..`). *Solution:* Implemented an automated renaming step during data loading to strip these characters, ensuring compatibility with standard MNE 10-20 montages.
+- **Sampling frequency discrepancy:** Three subjects (`S088`, `S092`, `S100`) were recorded at `128 Hz` while most subjects were `160 Hz`.  
+  *Solution:* Kept them out of the clean baseline pool to avoid inconsistent time-series shapes during CSP evaluation.
+- **Channel name inconsistency:** Some EDF channel labels had trailing dots (for example `C3..`, `Cz..`).  
+  *Solution:* Added a channel-cleaning step before montage assignment and preprocessing.
+- **Leakage risk in CSP pipeline:** CSP can easily leak information if fit before the split.  
+  *Solution:* Fit CSP only on the training folds inside each LOSO split, then transformed the held-out run.
+- **Run/session structure:** The dataset has multiple imagery runs per subject, so random trial splitting would be too optimistic.  
+  *Solution:* Used **Leave-One-Session-Out** with runs `R04`, `R08`, and `R12`.
 
 ### Methodological Choices
-- **Dataset Audit Scope:** Verified 109 participants across all 3 imagery runs (4, 8, 12). Confirmed that while minor class imbalances exist per run (e.g., 8 vs 7), every subject in the clean pool (106 participants) has both classes present across the concatenated sessions.
-- **Cross-validation strategy:** ...
-- **Channel selection (if any):** ...
-- **Performance differences (LDA vs SVM):** ...
+- **Filter choice:** Used `8–30 Hz` to cover the main mu/beta motor imagery rhythms.
+- **Epoch choice:** Used `-1 to 4 s` to keep pre-cue baseline and the full post-cue imagery period.
+- **Classifier window choice:** Used `0.5–3.5 s` to focus on the main imagery activity and avoid the immediate cue onset period.
+- **CSP choice:** Kept `4` components as a compact baseline; enough to separate left vs right variance patterns without making the feature space too noisy.
+- **Cross-validation strategy:** Subject-wise **LOSO across runs** instead of random trial splits.
+- **Channel handling:** Used multichannel EEG with standard montage assignment; no manual single-channel selection for classification.
+- **Dataset audit scope:** Verified `109` subjects total. Built the clean baseline on `106` subjects after excluding the 3 flagged `128 Hz` cases.
+- **Performance differences (LDA vs SVM):** Both models performed very similarly overall. SVM was only slightly higher on the clean baseline, so classifier choice mattered less than preprocessing + CSP.
+- **Baseline result summary:**  
+  - **CSP + LDA:** mean LOSO accuracy ≈ `0.615`
+  - **CSP + SVM:** mean LOSO accuracy ≈ `0.617`
+
+---
+
+>**Note:** The current final baseline is on the clean `106-subject` pool, not all `109` participants.
