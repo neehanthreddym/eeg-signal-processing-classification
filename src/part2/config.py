@@ -1,0 +1,5 @@
+N_COMPONENTS_SET = [2, 4, 6, 8]
+SOLVER_SET = ["svd", "lsqr", "eigen"]
+SHRINKAGE_SET = [None, "auto", 0.1, 0.3]
+SVM_KERNEL_SET = ["linear"]
+SVM_C_SET = [0.01, 0.1, 1, 10, 100]

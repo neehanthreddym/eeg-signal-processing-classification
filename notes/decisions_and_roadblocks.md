@@ -33,9 +33,9 @@
 - **Epoch window (relative to cue):** `-1.0 to 4.0 s`
 - **Baseline window:** `-1.0 to 0.0 s`
 - **Classifier window:** `0.5 to 3.5 s`
-- **CSP components:** `4`
-- **LDA settings:** `solver="svd"`
-- **SVM settings:** `kernel="linear", C=1.0`
+- **CSP components:** `4` (Tuned: `6` for LDA, `8` for SVM)
+- **LDA settings:** `solver="svd"` (Tuned: `solver="lsqr", shrinkage=0.3`)
+- **SVM settings:** `kernel="linear", C=1.0` (Tuned: remained the same)
 
 ### Major Roadblocks
 - **Sampling frequency discrepancy:** Three subjects (`S088`, `S092`, `S100`) were recorded at `128 Hz` while most subjects were `160 Hz`.  
@@ -51,14 +51,17 @@
 - **Filter choice:** Used `8–30 Hz` to cover the main mu/beta motor imagery rhythms.
 - **Epoch choice:** Used `-1 to 4 s` to keep pre-cue baseline and the full post-cue imagery period.
 - **Classifier window choice:** Used `0.5–3.5 s` to focus on the main imagery activity and avoid the immediate cue onset period.
-- **CSP choice:** Kept `4` components as a compact baseline; enough to separate left vs right variance patterns without making the feature space too noisy.
+- **CSP choice:** Started with `4` components as a compact baseline. Hyperparameter tuning later expanded this to `6` (for LDA) and `8` (for SVM) to capture more nuanced spatial variance patterns.
 - **Cross-validation strategy:** Subject-wise **LOSO across runs** instead of random trial splits.
 - **Channel handling:** Used multichannel EEG with standard montage assignment; no manual single-channel selection for classification.
 - **Dataset audit scope:** Verified `109` subjects total. Built the clean baseline on `106` subjects after excluding the 3 flagged `128 Hz` cases.
-- **Performance differences (LDA vs SVM):** Both models performed very similarly overall. SVM was only slightly higher on the clean baseline, so classifier choice mattered less than preprocessing + CSP.
-- **Baseline result summary:**  
-  - **CSP + LDA:** mean LOSO accuracy ≈ `0.615`
-  - **CSP + SVM:** mean LOSO accuracy ≈ `0.617`
+- **Performance differences (LDA vs SVM):** Both models performed very similarly overall, both before and after hyperparameter tuning. The difference in accuracy between classifiers remained marginal.
+- **Baseline vs. Tuning result summary:**  
+  - **Baseline CSP + LDA:** mean LOSO accuracy ≈ `0.615`
+  - **Baseline CSP + SVM:** mean LOSO accuracy ≈ `0.617`
+  - **Tuned CSP + LDA:** mean LOSO accuracy ≈ `0.627`
+  - **Tuned CSP + SVM:** mean LOSO accuracy ≈ `0.624`
+- **Tuning interpretation:** A Grid Search provided a small boost (~1-1.2%), mainly via increasing the number of CSP components and adding shrinkage to LDA. However, the larger obstacle remains the inherent non-stationarity across runs or subjects.
 
 ---
 

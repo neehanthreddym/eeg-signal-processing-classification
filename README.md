@@ -83,15 +83,18 @@ Classify **left vs right hand motor imagery** using a classical EEG decoding pip
 - **106** subjects were used in the clean baseline.
 - **3** subjects (`S088`, `S092`, `S100`) were excluded from the main baseline because their runs were sampled at **128 Hz** instead of the expected **160 Hz**.
 
-### Baseline results
-- **CSP + LDA:** mean LOSO accuracy about **0.615**
-- **CSP + SVM:** mean LOSO accuracy about **0.617**
+### Baseline vs. Tuning results
+- **Baseline CSP + LDA:** mean LOSO accuracy about **0.615** (4 components, svd)
+- **Baseline CSP + SVM:** mean LOSO accuracy about **0.617** (4 components, linear, C=1.0)
+- **Tuned CSP + LDA:** mean LOSO accuracy **0.627** (6 components, lsqr, shrinkage=0.3)
+- **Tuned CSP + SVM:** mean LOSO accuracy **0.624** (8 components, linear, C=1.0)
 
 ### Interpretation
-- Both models performed **very similarly**.
-- The difference between LDA and SVM was small, so the bigger issue was not classifier choice.
-- The harder problem was **subject/session variability**.
-- This makes the project a good example of how much performance in EEG decoding depends on preprocessing, fold design, and signal stability.
+- Both models performed **very similarly** before and after tuning.
+- Hyperparameter tuning provided a small but measurable performance boost (~1-1.2%), primarily by increasing the number of CSP components (from 4 to 6/8) and adding shrinkage to LDA.
+- The difference between LDA and SVM remained small, so the bigger issue was not classifier choice.
+- The harder problem was **subject/session variability**. Tuning cannot easily overcome non-stationarity across runs or subjects.
+- This makes the project a good example of how much performance in EEG decoding depends on preprocessing, fold design, and signal stability over just model optimization.
 
 ### Main takeaway
 A classical **CSP + linear classifier** pipeline gives a solid and explainable baseline for binary motor imagery. It does not solve all variability issues, but it is a strong first benchmark and aligns well with standard BCI literature.
