@@ -41,7 +41,7 @@ The manual detector was built as a simple, interpretable approximation of spindl
 
 ### Part 1 summary
 - The manual detector matched YASA reasonably well on some participants, especially **EPCTL11** and **EPCTL14**.
-- It was less stable on others, especially **EPCTL13** and **EPCTL15**, showing the weakness of a fixed global amplitude threshold.
+- It was less stable on others, especially **EPCTL13** and **EPCTL15**, showing the limitation of using a single threshold multiplier (`k`) calibrated on one subject across all participants.
 - The manual detector generally produced **shorter average spindle durations** than YASA.
 - The raw Hilbert envelope was noisy, so smoothing was necessary to reduce fragmentation of events.
 
@@ -104,7 +104,7 @@ A classical **CSP + linear classifier** pipeline gives a solid and explainable b
 
 ### Part 1
 - Re-running YASA inside plotting code was too expensive, so benchmark detections were cached and reused.
-- A fixed amplitude threshold did not generalize equally across all participants.
+- A global threshold multiplier (`k`) calibrated on one subject did not generalize equally across all participants, despite the threshold itself being computed per subject.
 - Envelope smoothing was required because the unsmoothed Hilbert envelope split real events into short fragments.
 
 ### Part 2
